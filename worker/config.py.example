@@ -1,0 +1,41 @@
+# Copie este arquivo para config.py (no mesmo diretório, no servidor) e
+# preencha com os valores reais. config.py NUNCA deve ir pro controle de
+# versão nem pro public_html -- fica só no $HOME do servidor, ao lado de
+# youtube_worker.py.
+
+# URL base do app (onde ficam as rotas /api/...).
+BASE_URL = "https://SEU_DOMINIO/aulas"
+
+# Mesmo valor de LECTTA_API_TOKEN do .env do app.
+API_TOKEN = "COLOQUE_O_LECTTA_API_TOKEN_AQUI"
+
+# Pasta que CONTÉM o binário ffmpeg estático (não o caminho do binário em
+# si) -- ex.: se o binário é ~/bin/ffmpeg, aqui é "~/bin" expandido.
+FFMPEG_LOCATION = "/home/SEU_USUARIO_CPANEL/bin"
+
+# Quantos jobs da fila essa execução processa antes de sair (o cron chama de
+# novo minuto a minuto, então uma fila grande esvazia em algumas execuções).
+MAX_JOBS_PER_RUN = 5
+
+# Vídeos mais longos que isso são recusados com erro (evita um vídeo de 10h
+# travar o worker ou estourar espaço em disco/tempo de execução).
+MAX_DURATION_SECONDS = 4 * 60 * 60  # 4h
+
+# Bitrate do mp3 gerado. Fala transcreve bem em taxas baixas -- 64kbps mono
+# mantém o arquivo pequeno (upload mais rápido, menos custo na IA) sem
+# perder qualidade de transcrição perceptível.
+AUDIO_BITRATE_KBPS = 64
+
+REQUEST_TIMEOUT = 30
+
+# Caminho pro cookies.txt exportado de um navegador logado no YouTube.
+# Necessário porque o YouTube costuma bloquear downloads vindos de IP de
+# hospedagem/datacenter com "Sign in to confirm you're not a bot". Deixe
+# None se ainda não configurou -- nesse caso vídeos que exigem confirmação
+# vão falhar com esse erro até você adicionar o arquivo.
+#
+# NUNCA cole o conteúdo desse arquivo em chat/lugar nenhum -- ele vale como
+# uma senha da sua conta Google. Exporte com uma extensão tipo "Get
+# cookies.txt LOCALLY" (Chrome/Firefox), logado no YouTube, e envie o
+# arquivo direto pro servidor via SFTP/SSH.
+COOKIES_FILE = None  # ex.: "/home/SEU_USUARIO_CPANEL/lectta-worker/cookies.txt"
